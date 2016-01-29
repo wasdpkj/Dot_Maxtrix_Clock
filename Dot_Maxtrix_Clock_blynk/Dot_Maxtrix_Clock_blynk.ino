@@ -57,7 +57,7 @@ Matrix display = Matrix(Addr);
 #include <BlynkSimpleShieldEsp8266_HardSer.h>
 #define EspSerial Serial1     // Set ESP8266 Serial object
 ESP8266 wifi(EspSerial);
-char auth[] = "2d6635f12d0143339b5304bafb62c3cf";// You should get Auth Token in the Blynk App.
+char auth[] = "2d6635f12d0143339b5304bafb62c3cfpkj";// You should get Auth Token in the Blynk App.
 
 WidgetLED ledB(V0);
 WidgetLED ledA(V1);
