@@ -218,15 +218,16 @@ void setup() {
   display.setCursor(0, 1);   //x, y
   display.print("conWifi"); //string, MODE, time ,y
   Blynk.begin(auth, wifi, WIFI_SSID, WIFI_PASSWORD);
-  display.clearDisplay();
   display.setCursor(0, 1);   //x, y
   while (Blynk.connect() == false) {
     Serial.println("Con ERROR");
+    display.clearDisplay();
     display.setColor(255, 0, 0);
     display.print("conER."); //string, MODE, time ,y
     wdt_enable(WDTO_1S); //reset mcu
   }
   Serial.println("con OK");
+  display.clearDisplay();
   display.setColor(0, 255, 0);
   display.print("conOK."); //string, MODE, time ,y
   delay(1000);
