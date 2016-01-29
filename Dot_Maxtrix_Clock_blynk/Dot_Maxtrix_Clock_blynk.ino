@@ -28,15 +28,17 @@
 // @老潘orz
 
 #include <avr/wdt.h>  //for wdt
-#include <Time.h> //for rtc
 #include <TimerOne.h> //for initialize
-#include <EEPROM.h> //for eeprom
+#include <Time.h> //for rtc
 #include <Wire.h> //for i2c
+#include <EEPROM.h> //for eeprom
+#include <Rtc_Pcf8563.h>
+#include "Rtc.h" //for rtc
 
 //----------------------------------------
 #define WIFI_SSID "Makermodule"
 #define WIFI_PASSWORD "microduino"
-char auth[] = "2d6635f12d0143339b5304bafb62c3cfpkj";// You should get Auth Token in the Blynk App.
+char auth[] = "2d6635f12d0143339b5304bafb62c3cf";// You should get Auth Token in the Blynk App.
 
 boolean staMessage = false, staProximity = false;
 int modeNum = 0;
@@ -44,9 +46,10 @@ uint8_t color[2][3] = {
   {0, 255, 255},
   {255, 0, 255}
 };
+#define buffer_MAX 128
 unsigned long timer[4];
 String _buffer_data;
-char buffer_data[128];
+char buffer_data[buffer_MAX];
 
 //----------------------------------------
 #include "Microduino_Matrix.h"  //for matrix
@@ -67,8 +70,8 @@ WidgetLED ledA(V1);
 WidgetTerminal terminal(V2);// Attach virtual serial terminal to Virtual Pin V1
 
 BLYNK_WRITE(V2) { //Message and SyncTime
-  for (int a = 0; a < 256; a++) buffer_data[a] = NULL;
   _buffer_data =  param.asStr();
+  for (int a = 0; a < buffer_MAX; a++) buffer_data[a] = NULL;
   if (_buffer_data.startsWith("T:", 0)) {
     _buffer_data.setCharAt(0, ' ');
     _buffer_data.setCharAt(1, ' ');
@@ -87,7 +90,7 @@ BLYNK_WRITE(V2) { //Message and SyncTime
     }
   }
   else {
-    if (_buffer_data.length() < 128) {
+    if (_buffer_data.length() < buffer_MAX) {
       for (int a = 0; a < _buffer_data.length(); a++) buffer_data[a] = _buffer_data[a];
       terminal.print("You said:");
       terminal.write(param.getBuffer(), param.getLength());
