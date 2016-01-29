@@ -1,8 +1,4 @@
-﻿Joypad_RC
-https://www.microduino.cn/wiki/index.php/Microduino-Joypad_Getting_start/zh
-==============
-
-Microduino-IDE
+﻿Microduino-IDE
 ==============
 Microduino Getting start:
 http://www.microduino.cc/download/
