@@ -38,7 +38,7 @@
 //----------------------------------------
 #define WIFI_SSID "Makermodule"
 #define WIFI_PASSWORD "microduino"
-char auth[] = "2d6635f12d0143339b5304bafb62c3cf";// You should get Auth Token in the Blynk App.
+char auth[] = "2d6635f12d0143339b5304bafb62c3cfpkj";// You should get Auth Token in the Blynk App.
 
 boolean staMessage = false, staProximity = false;
 int modeNum = 0;
@@ -191,10 +191,7 @@ void colorClear(uint8_t _time) {
 
 void updataProximity() {
   pinMode(A6, INPUT_PULLUP);
-  if (!digitalRead(A6) && staMessage) {
-    staProximity = true;
-    Serial.println("Key!");
-  }
+  staProximity = bool(!digitalRead(A6) && staMessage);
 }
 
 void setup() {
