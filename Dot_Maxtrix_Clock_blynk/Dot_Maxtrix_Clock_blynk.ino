@@ -34,6 +34,10 @@
 #include <Wire.h> //for i2c
 
 //----------------------------------------
+#define WIFI_SSID "Makermodule"
+#define WIFI_PASSWORD "microduino"
+char auth[] = "2d6635f12d0143339b5304bafb62c3cfpkj";// You should get Auth Token in the Blynk App.
+
 boolean staMessage = false, staProximity = false;
 int modeNum = 0;
 uint8_t color[2][3] = {
@@ -57,7 +61,6 @@ Matrix display = Matrix(Addr);
 #include <BlynkSimpleShieldEsp8266_HardSer.h>
 #define EspSerial Serial1     // Set ESP8266 Serial object
 ESP8266 wifi(EspSerial);
-char auth[] = "2d6635f12d0143339b5304bafb62c3cfpkj";// You should get Auth Token in the Blynk App.
 
 WidgetLED ledB(V0);
 WidgetLED ledA(V1);
@@ -214,7 +217,7 @@ void setup() {
   display.setColor(255, 255, 0);
   display.setCursor(0, 1);   //x, y
   display.print("conWifi"); //string, MODE, time ,y
-  Blynk.begin(auth, wifi, "Makermodule", "microduino");
+  Blynk.begin(auth, wifi, WIFI_SSID, WIFI_PASSWORD);
   display.clearDisplay();
   display.setCursor(0, 1);   //x, y
   while (Blynk.connect() == false) {
