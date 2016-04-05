@@ -8,7 +8,7 @@
 #include "Microduino_Matrix.h"
 
 uint8_t Addr[MatrixPix_X][MatrixPix_Y] = {  //1x4
-  { 64, 63, 62, 61}
+  { 64}
 };
 
 Matrix display = Matrix(Addr);
@@ -16,7 +16,7 @@ Matrix display = Matrix(Addr);
 #include "time.h"
 
 #include <SoftwareSerial.h>
-SoftwareSerial mySerial(4, 5); //RX,TX
+SoftwareSerial mySerial(2, 3); //RX,TX
 
 char buffer[128];
 boolean buffer_sta_t = false;
@@ -62,29 +62,40 @@ void loop() {
   if (millis() < timer[0]) timer[0] = millis();
   if (millis() - timer[0] > 1000) { //1 second
     if ((timeStatus() != timeNotSet)) {
-      //display.clearDisplay();
-      display.setFontMode(MODE_H);
-      if (mode) {
-        display.setColor(0, 255, 255);
-        display.setCursor(4, 0);   //x, y
-
-        display.print(hour());
-        display.print(second() % 2 ? " " : ":");
-        if (minute() < 10)
-          display.print('0');
-        display.print(minute());
+      display.clearDisplay();
+      display.setColor(0, 0, 255);
+      for (int a = 0; a < 16; a++) {
+        display.setLed(a < 8 ? a : a - 8, a < 8 ? 0 : 1, bitRead(year(), 15 - a));
       }
-      else {
-        display.setColor(255, 0, 255);
-        display.setCursor(4, 0);   //x, y
-        //        display.print(year());
-        if (month() < 10)
-          display.print('0');
-        display.print(month());
-        display.print("-");
-        if (day() < 10)
-          display.print('0');
-        display.print(day());
+
+      display.setColor(0, 255, 0);
+      for (int a = 0; a < 8; a++) {
+        display.setLed(a , 2, bitRead(month(), 7 - a));
+      }
+
+      display.setColor(0, 255, 255);
+      for (int a = 0; a < 8; a++) {
+        display.setLed(a , 3, bitRead(day(), 7 - a));
+      }
+
+      display.setColor(255, 0, 0);
+      for (int a = 0; a < 8; a++) {
+        display.setLed(a , 4, bitRead(weekday(), 7 - a));
+      }
+
+      display.setColor(255, 0, 255);
+      for (int a = 0; a < 8; a++) {
+        display.setLed(a , 5, bitRead(hour(), 7 - a));
+      }
+
+      display.setColor(255, 255, 0);
+      for (int a = 0; a < 8; a++) {
+        display.setLed(a , 6, bitRead(minute(), 7 - a));
+      }
+
+      display.setColor(255, 255, 255);
+      for (int a = 0; a < 8; a++) {
+        display.setLed(a , 7, bitRead(second(), 7 - a));
       }
     }
     timer[0] = millis();
@@ -95,25 +106,6 @@ void loop() {
     GetRtc();
 
     timer[1] = millis();
-  }
-
-  if (millis() < timer[2]) timer[2] = millis();
-  if (millis() - timer[2] > ( mode ? 12 * 1000 : 3 * 1000)) { //12 or 3 second
-    mode = !mode;
-    for (int x = 0; x < display.getWidth() * 8 * 2; x++) {
-      for (int y = 0; y < display.getHeight() * 8; y++) {
-        randomSeed(analogRead(A0));
-        if (x < display.getWidth() * 8)
-          display.setLedColor(x, y, random(0, 255), random(0, 255), random(0, 255));   //x, y, r, g, b
-        else
-          display.setLedColor(x - display.getWidth() * 8, y, 0, 0, 0); //x, y, r, g, b
-      }
-      delay(2);
-    }
-    display.clearDisplay();
-
-    timer[2] = millis();
-    timer[0] = millis() - 1000;
   }
 
   if (millis() < timer[3]) timer[3] = millis();
@@ -159,8 +151,17 @@ void bleUpdata() {
     setTime(sta[3], sta[4], sta[5],  sta[2], sta[1], sta[0]);
     SetRtc();
     GetRtc();
-    display.setColor(0, 255, 0);
-    display.writeString("T.Sync", MODE_H, 20, 0);
+
+    for (int x = 0; x < display.getWidth() * 8 * 2; x++) {
+      for (int y = 0; y < display.getHeight() * 8; y++) {
+        randomSeed(analogRead(A0));
+        if (x < display.getWidth() * 8)
+          display.setLedColor(x, y, random(0, 255), random(0, 255), random(0, 255));   //x, y, r, g, b
+        else
+          display.setLedColor(x - display.getWidth() * 8, y, 0, 0, 0); //x, y, r, g, b
+      }
+      delay(20);
+    }
     display.clearDisplay();
 
     for (int a = 0; a < buffer_num; a++)
