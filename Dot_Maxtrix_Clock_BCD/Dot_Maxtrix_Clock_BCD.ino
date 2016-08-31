@@ -174,7 +174,7 @@ void bleUpdata() {
     buffer_sta_d = false;
 
     display.clearColor();
-    display.writeString(buffer, MODE_H, 20, 0);
+    display.writeString(buffer, 20, 0);
     display.clearDisplay();
 
     for (int a = 0; a < buffer_num; a++)

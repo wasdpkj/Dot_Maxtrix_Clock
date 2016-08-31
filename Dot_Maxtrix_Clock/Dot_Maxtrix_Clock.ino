@@ -63,7 +63,6 @@ void loop() {
   if (millis() - timer[0] > 1000) { //1 second
     if ((timeStatus() != timeNotSet)) {
       //display.clearDisplay();
-      display.setFontMode(MODE_H);
       if (mode) {
         display.setColor(0, 255, 255);
         display.setCursor(4, 0);   //x, y
@@ -160,7 +159,7 @@ void bleUpdata() {
     SetRtc();
     GetRtc();
     display.setColor(0, 255, 0);
-    display.writeString("T.Sync", MODE_H, 20, 0);
+    display.writeString("T.Sync", 20, 0);
     display.clearDisplay();
 
     for (int a = 0; a < buffer_num; a++)
@@ -173,7 +172,7 @@ void bleUpdata() {
     buffer_sta_d = false;
 
     display.clearColor();
-    display.writeString(buffer, MODE_H, 20, 0);
+    display.writeString(buffer, 20, 0);
     display.clearDisplay();
 
     for (int a = 0; a < buffer_num; a++)

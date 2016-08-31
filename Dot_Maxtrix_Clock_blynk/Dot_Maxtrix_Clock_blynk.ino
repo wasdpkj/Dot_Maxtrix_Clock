@@ -142,7 +142,7 @@ void ReadMessages() {
   colorClear(10);
   display.setColor(255, 255, 255);
   display.clearDisplay();
-  display.writeString(buffer_data, MODE_H, 50, 1);
+  display.writeString(buffer_data, 50, 1);
   display.clearDisplay();
   ledA.off();
   terminal.println("Message has been read!");
@@ -158,7 +158,6 @@ void showClock() {
   if (modeNum > 20) modeNum = 0;
   if (modeNum == 15 || !modeNum) colorClear(2);
   //display.clearDisplay();
-  display.setFontMode(MODE_H);
   if (modeNum < 15) {
     display.setColor(color[0][0], color[0][1], color[0][2]);
     display.setCursor(4, 1);   //x, y
@@ -212,7 +211,7 @@ void setup() {
   //clearColor
   display.clearColor();
   //writeString H
-  display.writeString("Microduino", MODE_H, 5, 1); //string, MODE, time ,y
+  display.writeString("Microduino", 5, 1); //string, MODE, time ,y
   display.clearDisplay();
   display.setColor(255, 255, 0);
   display.setCursor(0, 1);   //x, y
