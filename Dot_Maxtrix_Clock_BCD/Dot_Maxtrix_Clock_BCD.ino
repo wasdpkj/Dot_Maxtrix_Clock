@@ -110,9 +110,9 @@ void loop() {
 
   if (millis() < timer[3]) timer[3] = millis();
   if (millis() - timer[3] > 1000) { //1 second
-    mySerial.print(rtc.formatDate(RTCC_DATE_ASIA));
+    mySerial.print(rtc.formatDate());
     mySerial.print(" ");
-    mySerial.print(rtc.formatTime(RTCC_TIME_HMS));
+    mySerial.print(rtc.formatTime());
 
     timer[3] = millis();
   }

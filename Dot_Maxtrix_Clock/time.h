@@ -19,6 +19,6 @@ void GetRtc() {
 void SetRtc() {
   Serial.println("SetRtc");
   rtc.initClock();  //set a time to start with.
-  rtc.setDate(day(), weekday() , month(), 0, year() - 2000); //day, weekday, month, century(1=1900, 0=2000), year(0-99)
+  rtc.setDate(day(), weekday() , month(), year() - 2000); //day, weekday, month, century(1=1900, 0=2000), year(0-99)
   rtc.setTime(hour(), minute() , second()); //hr, min, sec
 }
