@@ -29,7 +29,7 @@
 
 #include <avr/wdt.h>  //for wdt
 #include <TimerOne.h> //for initialize
-#include <Time.h> //for rtc
+#include <TimeLib.h>
 #include <Wire.h> //for i2c
 #include <EEPROM.h> //for eeprom
 #include <Rtc_Pcf8563.h>
